@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pretrevic Wigs - Customization Studio</title>
+    <!-- Preload the first hero image -->
+    <link rel="preload" href="custom-hero.png" as="image">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Colors */
+        :root {
+            --bg-primary: #FFF5F8; /* Light Pinkish White */
+            --bg-secondary: #FFE4E1; /* Misty Rose for sections */
+            --accent-primary: #FF1493; /* Neon Pink */
+            --accent-secondary: #FF69B4; /* Softer Pink for accents */
+            --text-primary: #1A1A1A; /* Dark Gray for main text */
+            --text-secondary: #4A4A4A; /* Medium Gray for secondary text */
+            --success: #00FF7F; /* Neon Green for success */
+            --error: #FF4040; /* Neon Red for errors */
+        }
+        .dark-mode {
+            --bg-primary: #1A1A1A; /* Dark Gray for modern base */
+            --bg-secondary: #2C2C2C; /* Slightly lighter gray for sections */
+            --accent-primary: #FF1493;
+            --accent-secondary: #FF69B4;
+            --text-primary: #FFFFFF; /* White for main text */
+            --text-secondary: #D3D3D3; /* Light Gray for secondary text */
+            --success: #00FF7F;
+            --error: #FF4040;
+        }
+
+        /* General Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Content Wrapper for Blur Effect */
+        .content-wrapper {
+            transition: filter 0.3s ease;
+        }
+        .content-wrapper.nav-open {
+            filter: blur(3px); /* Reduced blur intensity */
+        }
+
+        /* Header (Exact match from index.html) */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-primary);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        header.shrink { transform: scale(0.98); }
+        .top-bar {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px var(--accent-primary), 0 0 10px var(--accent-primary);
+        }
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+        .search-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 20px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        .search-bar input:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        .search-bar::after {
+            content: '🔍';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        nav { display: flex; gap: 1.5rem; }
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.2rem 0;
+            transition: color 0.3s;
+        }
+        nav a::before, nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="%23FF1493" stroke-width="2" fill="none"/></svg>') repeat-x;
+            background-size: 10px;
+            transition: width 0.3s ease;
+        }
+        nav a::before { top: 0; left: 0; }
+        nav a::after { bottom: 0; right: 0; }
+        nav a:hover::before, nav a:hover::after { width: 100%; }
+        nav a:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .header-icons { display: flex; gap: 1rem; align-items: center; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.2rem; color: var(--text-primary); }
+        .cart-icon:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            box-shadow: 0 0 5px var(--accent-primary);
+        }
+        #dark-mode-toggle { cursor: pointer; font-size: 1.2rem; color: var(--text-primary); }
+        #dark-mode-toggle:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-primary); }
+        .hamburger:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .nav-header {
+            display: none; /* Hide nav-header by default (desktop mode) */
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: zoomIn 1.5s ease-in-out;
+        }
+        @keyframes zoomIn {
+            0% { transform: scale(1.2); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFFFFF;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: slideInLeft 1s ease-in-out;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            animation: slideInRight 1s ease-in-out 0.3s;
+            animation-fill-mode: both;
+        }
+        .hero-content button {
+            background: var(--accent-primary);
+            color: #FFFFFF;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 0 10px var(--accent-primary);
+            transition: background 0.3s, box-shadow 0.3s;
+            animation: bounceIn 1s ease-in-out 0.6s;
+            animation-fill-mode: both;
+        }
+        .hero-content button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+        @keyframes slideInLeft {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Main Content */
+        main { padding: 2rem; }
+        .customization-section {
+            margin: 3rem 0;
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .customization-section h2 {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .customization-section p {
+            animation: fadeIn 1s ease-in;
+            text-align: center;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Customization Form */
+        .customization-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .customization-form {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        .customization-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .customization-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-primary);
+        }
+        .customization-form select, .customization-form input[type="checkbox"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 5px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+            font-size: 1rem;
+        }
+        .customization-form select:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        .customization-form .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .customization-form input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+        .customization-form button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 0 10px var(--accent-primary);
+            transition: background 0.3s, box-shadow 0.3s;
+            width: 100%;
+        }
+        .customization-form button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+
+        /* Preview Section */
+        .preview-section {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            text-align: center;
+        }
+        .preview-section h3 {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 5px var(--accent-primary);
+        }
+        /* Enhanced Preview Image Styling (Retained from previous enhancement) */
+        .preview-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: linear-gradient(145deg, var(--bg-primary), var(--accent-secondary));
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        .preview-image::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 4px dashed var(--accent-primary);
+            border-radius: 25px;
+            opacity: 0.4;
+            z-index: 0;
+            animation: rotateBorder 10s linear infinite;
+        }
+        .preview-image::after {
+            content: '✨';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            opacity: 0.6;
+            z-index: 2;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .preview-image:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.4);
+        }
+        .preview-image:hover::before {
+            opacity: 0.8;
+        }
+        .preview-image:hover::after {
+            opacity: 1;
+            transform: rotate(360deg);
+        }
+        .preview-image img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid var(--accent-primary);
+            z-index: 1;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+        .preview-image:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+        /* Decorative Corner Elements */
+        .preview-image .corner-decor {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M15 0 A15 15 0 0 1 30 15 L15 15 Z" fill="%23FF1493" /><circle cx="15" cy="15" r="5" fill="%23FF69B4"/></svg>') no-repeat;
+            background-size: contain;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+        .preview-image .corner-decor.top-left { top: 5px; left: 5px; }
+        .preview-image .corner-decor.top-right { top: 5px; right: 5px; transform: rotate(90deg); }
+        .preview-image .corner-decor.bottom-left { bottom: 5px; left: 5px; transform: rotate(-90deg); }
+        .preview-image .corner-decor.bottom-right { bottom: 5px; right: 5px; transform: rotate(180deg); }
+        .preview-image:hover .corner-decor {
+            transform: scale(1.2) rotate(45deg);
+        }
+        /* Glow Effect on Hover */
+        .preview-image .glow-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 0.4s ease;
+        }
+        .preview-image:hover .glow-overlay {
+            opacity: 1;
+        }
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .preview-details {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .preview-details p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+        .preview-details .total-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-top: 1rem;
+        }
+
+        /* Cart Modal (Matched with index.html) */
+        #cart-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-primary);
+            padding: 2rem;
+            border: 2px solid var(--accent-primary);
+            border-radius: 15px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px var(--accent-primary);
+            z-index: 2000;
+        }
+        #cart-modal h2 {
+            font-size: 1.8rem;
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        #cart-modal ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        #cart-modal li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        #cart-modal li span {
+            flex: 1;
+            font-weight: 500;
+        }
+        #cart-modal li .quantity-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        #cart-modal li button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 5px var(--accent-primary);
+            font-size: 0.9rem;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        #cart-modal li button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 10px var(--accent-secondary);
+        }
+        #cart-modal li button.remove {
+            background: var(--error);
+            box-shadow: 0 0 5px var(--error);
+        }
+        #cart-modal li button.remove:hover {
+            background: #FF6666;
+            box-shadow: 0 0 10px #FF6666;
+        }
+        #cart-modal p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        #cart-modal .close-btn {
+            display: block;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.8rem;
+            margin: 0 auto;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--accent-primary);
+            font-size: 1rem;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        #cart-modal .close-btn:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+
+        /* Footer (Exact match from index.html) */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 1rem;
+            position: relative;
+            border-top: 5px solid var(--accent-primary);
+            margin-top: 3rem;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="%23FF1493" stroke-width="2" fill="none"/></svg>') repeat-x;
+            background-size: 20px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        footer h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer p, footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0.5rem 0;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer p i { margin-right: 0.5rem; color: var(--accent-primary); }
+        footer form { display: flex; flex-direction: column; gap: 0.5rem; }
+        footer input, footer textarea {
+            padding: 0.5rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 5px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        footer input:focus, footer textarea:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        footer button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 10px var(--accent-secondary);
+        }
+        .form-message { text-align: center; margin-top: 0.5rem; }
+        .success { color: var(--success); text-shadow: 0 0 5px var(--success); }
+        .error { color: var(--error); text-shadow: 0 0 5px var(--error); }
+        .social-icons { display: flex; gap: 1rem; }
+        .social-icons a {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons a:hover {
+            color: var(--accent-primary);
+            transform: scale(1.2);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+        .back-to-top {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .back-to-top a {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+        .back-to-top a:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+
+        /* Improved Responsiveness (Matched with index.html) */
+        @media (max-width: 1024px) {
+            .main-header {
+                padding: 1rem;
+            }
+            .logo { font-size: 1.8rem; }
+            .search-bar { max-width: 300px; }
+            .hero { height: 400px; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .hero-content button { padding: 0.8rem 1.5rem; font-size: 1rem; }
+            .customization-container { flex-direction: column; align-items: center; }
+            .customization-form, .preview-section { max-width: 100%; }
+            .preview-image { max-width: 250px; height: 250px; }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+            }
+            .logo { font-size: 1.5rem; }
+            .search-nav {
+                width: 100%;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+            .search-bar {
+                max-width: 100%;
+                flex: 1;
+            }
+            .search-bar input {
+                padding: 0.4rem 1.5rem 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: -70%;
+                width: 70%;
+                height: 100%;
+                background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+                padding: 2rem 1rem;
+                box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+                transition: left 0.3s ease;
+                z-index: 1001;
+                overflow-y: auto;
+                filter: none;
+            }
+            nav.active {
+                display: block;
+                left: 0;
+            }
+            .nav-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+            nav .nav-header h3 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #FFFFFF;
+                text-shadow: 0 0 10px var(--accent-primary);
+            }
+            nav .close-nav {
+                font-size: 1.5rem;
+                color: #FFFFFF;
+                cursor: pointer;
+                transition: transform 0.3s, text-shadow 0.3s;
+            }
+            nav .close-nav:hover {
+                transform: rotate(90deg);
+                text-shadow: 0 0 10px var(--accent-primary);
+            }
+            nav a {
+                display: block;
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+                color: #FFFFFF;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+                padding: 0.5rem 1rem;
+                border-radius: 5px;
+                background: rgba(82, 82, 80, 0.16);
+                transition: transform 0.3s, background 0.3s, text-shadow 0.3s;
+                opacity: 0;
+                transform: translateX(-20px);
+                animation: slideInNav 0.5s forwards;
+                animation-delay: calc(0.1s * var(--nav-index));
+            }
+            nav a:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateX(10px);
+                text-shadow: 0 0 15px var(--accent-primary);
+            }
+            @keyframes slideInNav {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            .hamburger { display: block; }
+            .header-icons { gap: 0.5rem; }
+            .cart-icon, #dark-mode-toggle { font-size: 1rem; }
+            #cart-count { font-size: 0.6rem; padding: 1px 4px; }
+            .hero { height: 300px; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content p { font-size: 0.9rem; }
+            .hero-content button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+            main { padding: 1rem; }
+            .customization-section {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            .customization-section h2 {
+                font-size: 1.5rem;
+            }
+            .customization-section p {
+                font-size: 0.9rem;
+            }
+            .customization-form select, .customization-form button { font-size: 0.9rem; }
+            .preview-image { max-width: 200px; height: 200px; }
+            .preview-details p { font-size: 0.9rem; }
+            .preview-details .total-price { font-size: 1rem; }
+            #cart-modal {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                transform: none;
+                border: none;
+                padding: 1.5rem;
+                border-radius: 0;
+            }
+            #cart-modal h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            #cart-modal li {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            #cart-modal li span {
+                margin-bottom: 0.5rem;
+            }
+            #cart-modal li .quantity-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            #cart-modal li button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            #cart-modal p {
+                font-size: 1rem;
+            }
+            #cart-modal .close-btn {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            footer { padding: 2rem 1rem; }
+            .footer-content { padding: 1rem; gap: 1rem; }
+            footer h3 { font-size: 1.1rem; }
+            footer p, footer a { font-size: 0.9rem; }
+            .social-icons a { font-size: 1.5rem; }
+            .back-to-top a { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+        }
+
+        @media (max-width: 480px) {
+            .main-header { padding: 0.5rem; }
+            .logo { font-size: 1.2rem; }
+            .search-bar input { font-size: 0.8rem; padding: 0.3rem 1rem 0.3rem 0.6rem; }
+            .hamburger { font-size: 1.2rem; }
+            .header-icons { gap: 0.3rem; }
+            .cart-icon, #dark-mode-toggle { font-size: 0.9rem; }
+            #cart-count { font-size: 0.5rem; padding: 1px 3px; }
+            .hero { height: 250px; }
+            .hero-content h1 { font-size: 1.5rem; }
+            .hero-content p { font-size: 0.8rem; }
+            .hero-content button { padding: 0.5rem 1rem; font-size: 0.8rem; }
+            main { padding: 0.5rem; }
+            .customization-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            .customization-section h2 {
+                font-size: 1.2rem;
+            }
+            .customization-section p {
+                font-size: 0.8rem;
+            }
+            .customization-form select, .customization-form button { font-size: 0.8rem; padding: 0.5rem; }
+            .customization-form .form-group { margin-bottom: 1rem; }
+            .preview-image { max-width: 150px; height: 150px; }
+            .preview-details p { font-size: 0.8rem; }
+            .preview-details .total-price { font-size: 0.9rem; }
+            footer { padding: 1.5rem 0.5rem; }
+            .footer-content { padding: 0.5rem; gap: 0.5rem; }
+            footer h3 { font-size: 1rem; }
+            footer p, footer a { font-size: 0.8rem; }
+            .social-icons a { font-size: 1.2rem; }
+            .back-to-top a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (Exact match from index.html) -->
+    <header>
+        <div class="top-bar">✨ Free Shipping on Orders Over $50! ✨</div>
+        <div class="main-header">
+            <div class="logo">Pretrevic Wigs</div>
+            <div class="search-nav">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for wigs...">
+                </div>
+                <span class="hamburger">☰</span>
+                <nav>
+                    <div class="nav-header">
+                        <h3>Pretrevic Wigs</h3>
+                        <span class="close-nav">✖</span>
+                    </div>
+                    <a href="index.html" style="--nav-index: 1;">Home</a>
+                    <a href="about.html" style="--nav-index: 2;">About Us</a>
+                    <a href="shop.html" style="--nav-index: 3;">Shop</a>
+                    <a href="customization.html" style="--nav-index: 4;">Customization</a>
+                    <a href="care-tips.html" style="--nav-index: 5;">Care & Tips</a>
+                    <a href="blog.html" style="--nav-index: 6;">Blog</a>
+                    <a href="community.html" style="--nav-index: 7;">Community</a>
+                    <a href="contact.html" style="--nav-index: 8;">Contact Us</a>
+                </nav>
+            </div>
+            <div class="header-icons">
+                <div class="cart-icon">🛒 <span id="cart-count">0</span></div>
+                <span id="dark-mode-toggle">🌙</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Main Content -->
+        <main>
+            <section class="hero">
+                <img src="wig2.jpg" alt="Customization Hero Image" width="1200" height="500">
+                <div class="hero-content">
+                    <h1>Design Your Dream Wig</h1>
+                    <p>Create a wig that’s uniquely yours with our Customization Studio!</p>
+                    <button onclick="window.location.href='#customization-section'">Start Designing</button>
+                </div>
+            </section>
+
+            <section class="customization-section" id="customization-section">
+                <h2>Customization Studio</h2>
+                <p>Choose your style, color, length, and more to craft the perfect wig.</p>
+                <div class="customization-container">
+                    <!-- Customization Form -->
+                    <div class="customization-form">
+                        <div class="form-group">
+                            <label for="style">Style</label>
+                            <select id="style" onchange="updatePreview()">
+                                <option value="curly">Curly ($10)</option>
+                                <option value="straight">Straight ($8)</option>
+                                <option value="wavy">Wavy ($9)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Color</label>
+                            <select id="color" onchange="updatePreview()">
+                                <option value="black">Black ($5)</option>
+                                <option value="blonde">Blonde ($7)</option>
+                                <option value="red">Red ($6)</option>
+                                <option value="brown">Brown ($5)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="length">Length</label>
+                            <select id="length" onchange="updatePreview()">
+                                <option value="short">Short ($10)</option>
+                                <option value="medium">Medium ($15)</option>
+                                <option value="long">Long ($20)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Additional Features</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" id="lace-front" onchange="updatePreview()"> Lace Front ($10)</label>
+                                <label><input type="checkbox" id="heat-resistant" onchange="updatePreview()"> Heat Resistant ($8)</label>
+                                <label><input type="checkbox" id="highlight" onchange="updatePreview()"> Highlights ($5)</label>
+                            </div>
+                        </div>
+                        <button onclick="addCustomWigToCart()">Add to Cart</button>
+                    </div>
+
+                    <!-- Preview Section -->
+                    <div class="preview-section">
+                        <h3>Your Custom Wig</h3>
+                        <div class="preview-image">
+                            <img id="preview-img" src="default-wig.png" alt="Custom Wig Preview" loading="lazy">
+                            <div class="glow-overlay"></div>
+                            <div class="corner-decor top-left"></div>
+                            <div class="corner-decor top-right"></div>
+                            <div class="corner-decor bottom-left"></div>
+                            <div class="corner-decor bottom-right"></div>
+                        </div>
+                        <div class="preview-details">
+                            <p><strong>Style:</strong> <span id="preview-style">Curly</span></p>
+                            <p><strong>Color:</strong> <span id="preview-color">Black</span></p>
+                            <p><strong>Length:</strong> <span id="preview-length">Short</span></p>
+                            <p><strong>Features:</strong> <span id="preview-features">None</span></p>
+                            <p class="total-price">Total: <span id="preview-price">$25.00</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Cart Modal -->
+        <div id="cart-modal"></div>
+
+        <!-- Footer (Exact match from index.html) -->
+        <footer>
+            <div class="footer-content">
+                <div>
+                    <h3>Pretrevic Wigs</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Wig Avenue, Lagos State, Nigeria</p>
+                    <p><i class="fas fa-globe"></i> We ship worldwide!</p>
+                    <p><i class="fas fa-phone-alt"></i> +234 123-456-7890</p>
+                    <p><i class="fas fa-envelope"></i> hello@pretrevicwigs.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9am-6pm, Sat: 10am-4pm (WAT)</p>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="shop.html">Shop</a></p>
+                    <p><a href="customization.html">Customization Studio</a></p>
+                    <p><a href="care-tips.html">Care & Tips</a></p>
+                    <p><a href="blog.html">Blog</a></p>
+                    <p><a href="community.html">Community</a></p>
+                    <p><a href="contact.html">Contact Us</a></p>
+                </div>
+                <div>
+                    <h3>Explore More</h3>
+                    <p><a href="#">Wig Mood Quiz</a></p>
+                    <p><a href="#">Lookbook</a></p>
+                    <p><a href="#">Customer Stories</a></p>
+                    <p><a href="#">Newsletter Signup</a></p>
+                </div>
+                <div>
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="fab fa-tiktok"></a>
+                        <a href="#" class="fab fa-twitter"></a>
+                        <a href="#" class="fab fa-facebook-f"></a>
+                        <a href="#" class="fab fa-instagram"></a>
+                        <a href="#" class="fab fa-whatsapp"></a>
+                        <a href="#" class="fab fa-pinterest"></a>
+                    </div>
+                    <h3 style="margin-top: 1rem;">Newsletter Love</h3>
+                    <form id="newsletter-form" action="https://getform.io/f/your-newsletter-id" method="POST">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <button type="submit">Join the Wig Fam!</button>
+                        <div class="form-message"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="back-to-top">
+                <a href="#">Back to Top ⬆️</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Header Shrink on Scroll (Matched with index.html)
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('shrink', window.scrollY > 50);
+        });
+
+        // Hamburger Menu (Matched with index.html)
+        const nav = document.querySelector('nav');
+        const hamburger = document.querySelector('.hamburger');
+        const closeNav = document.querySelector('.close-nav');
+        const contentWrapper = document.querySelector('.content-wrapper');
+
+        hamburger.addEventListener('click', () => {
+            nav.classList.add('active');
+            contentWrapper.classList.add('nav-open');
+        });
+
+        closeNav.addEventListener('click', () => {
+            nav.classList.remove('active');
+            contentWrapper.classList.remove('nav-open');
+        });
+
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                contentWrapper.classList.remove('nav-open');
+            });
+        });
+
+        // Dark Mode Toggle (Matched with index.html)
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            document.getElementById('dark-mode-toggle').textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('dark-mode-toggle').textContent = '☀️';
+        }
+
+        // Customization Preview and Price Calculation
+        function updatePreview() {
+            const style = document.getElementById('style').value;
+            const color = document.getElementById('color').value;
+            const length = document.getElementById('length').value;
+            const laceFront = document.getElementById('lace-front').checked;
+            const heatResistant = document.getElementById('heat-resistant').checked;
+            const highlight = document.getElementById('highlight').checked;
+
+            // Update preview details
+            document.getElementById('preview-style').textContent = style.charAt(0).toUpperCase() + style.slice(1);
+            document.getElementById('preview-color').textContent = color.charAt(0).toUpperCase() + color.slice(1);
+            document.getElementById('preview-length').textContent = length.charAt(0).toUpperCase() + length.slice(1);
+
+            // Update features
+            let features = [];
+            if (laceFront) features.push('Lace Front');
+            if (heatResistant) features.push('Heat Resistant');
+            if (highlight) features.push('Highlights');
+            document.getElementById('preview-features').textContent = features.length > 0 ? features.join(', ') : 'None';
+
+            // Update image (simulated with placeholder logic)
+            const previewImg = document.getElementById('preview-img');
+            previewImg.src = `${style}-${color}-${length}.png`; // Placeholder image name
+
+            // Calculate price
+            let basePrice = 0;
+            switch (style) {
+                case 'curly': basePrice += 10; break;
+                case 'straight': basePrice += 8; break;
+                case 'wavy': basePrice += 9; break;
+            }
+            switch (color) {
+                case 'black': basePrice += 5; break;
+                case 'blonde': basePrice += 7; break;
+                case 'red': basePrice += 6; break;
+                case 'brown': basePrice += 5; break;
+            }
+            switch (length) {
+                case 'short': basePrice += 10; break;
+                case 'medium': basePrice += 15; break;
+                case 'long': basePrice += 20; break;
+            }
+            if (laceFront) basePrice += 10;
+            if (heatResistant) basePrice += 8;
+            if (highlight) basePrice += 5;
+
+            document.getElementById('preview-price').textContent = `$${basePrice.toFixed(2)}`;
+        }
+
+        // Add Custom Wig to Cart (Adapted to match index.html cart functionality)
+        function addCustomWigToCart() {
+            const style = document.getElementById('style').value;
+            const color = document.getElementById('color').value;
+            const length = document.getElementById('length').value;
+            const laceFront = document.getElementById('lace-front').checked;
+            const heatResistant = document.getElementById('heat-resistant').checked;
+            const highlight = document.getElementById('highlight').checked;
+
+            let features = [];
+            if (laceFront) features.push('Lace Front');
+            if (heatResistant) features.push('Heat Resistant');
+            if (highlight) features.push('Highlights');
+
+            const name = `Custom ${style.charAt(0).toUpperCase() + style.slice(1)} ${color.charAt(0).toUpperCase() + color.slice(1)} ${length.charAt(0).toUpperCase() + length.slice(1)} Wig${features.length > 0 ? ' with ' + features.join(', ') : ''}`;
+            const price = parseFloat(document.getElementById('preview-price').textContent.replace('$', ''));
+            const id = `custom-${Date.now()}`; // Unique ID for custom wig
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let item = cart.items.find(i => i.id === id);
+            if (item) {
+                item.quantity += 1;
+            } else {
+                cart.items.push({ id, name, price, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        // Cart Display (Matched with index.html)
+        function updateCartDisplay() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let modal = document.getElementById('cart-modal');
+            modal.innerHTML = `
+                <h2>Your Wig Haul</h2>
+                <ul>${cart.items.map(item => `
+                    <li>
+                        <span>${item.name} - $${item.price} x ${item.quantity}</span>
+                        <div class="quantity-controls">
+                            <button onclick="updateQuantity('${item.id}', -1)">-</button>
+                            <button onclick="updateQuantity('${item.id}', 1)">+</button>
+                            <button class="remove" onclick="removeItem('${item.id}')">Remove</button>
+                        </div>
+                    </li>`).join('')}
+                </ul>
+                <p>Total: $${cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2)}</p>
+                <button class="close-btn" onclick="document.getElementById('cart-modal').style.display='none'">Close</button>
+            `;
+            modal.style.display = 'block';
+            document.getElementById('cart-count').textContent = cart.items.length;
+        }
+
+        document.querySelector('.cart-icon').addEventListener('click', updateCartDisplay);
+
+        function updateQuantity(id, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let item = cart.items.find(i => i.id === id);
+            item.quantity += change;
+            if (item.quantity <= 0) cart.items = cart.items.filter(i => i.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function removeItem(id) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            cart.items = cart.items.filter(i => i.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        // Form Submission (Matched with index.html)
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let messageDiv = this.querySelector('.form-message');
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    this.reset();
+                    messageDiv.innerHTML = '<span class="success">Welcome to the Wig Fam! Check your email!</span>';
+                    messageDiv.style.display = 'block';
+                    setTimeout(() => messageDiv.style.display = 'none', 3000);
+                } else {
+                    messageDiv.innerHTML = '<span class="error">Oops! Try again!</span>';
+                    messageDiv.style.display = 'block';
+                    setTimeout(() => messageDiv.style.display = 'none', 3000);
+                }
+            })
+            .catch(() => {
+                messageDiv.innerHTML = '<span class="error">No connection—check your internet!</span>';
+                messageDiv.style.display = 'block';
+                setTimeout(() => messageDiv.style.display = 'none', 3000);
+            });
+        });
+
+        // Initialize preview on page load
+        updatePreview();
+    </script>
+</body>
+</html>

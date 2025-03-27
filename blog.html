@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pretrevic Wigs - Blog</title>
+    <!-- Preload the first blog thumbnail for faster loading -->
+    <link rel="preload" href="blog1.webp" as="image">
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --bg-primary: #FFF5F8; /* Light Pinkish White */
+            --bg-secondary: #FFE4E1; /* Misty Rose for sections */
+            --accent-primary: #FF1493; /* Neon Pink */
+            --accent-secondary: #FF69B4; /* Softer Pink for accents */
+            --text-primary: #1A1A1A; /* Dark Gray for main text */
+            --text-secondary: #4A4A4A; /* Medium Gray for secondary text */
+            --success: #00FF7F; /* Neon Green for success messages */
+            --error: #FF4040; /* Neon Red for error messages */
+        }
+        .dark-mode {
+            --bg-primary: #1A1A1A; /* Dark Gray for modern base */
+            --bg-secondary: #2C2C2C; /* Slightly lighter gray for sections */
+            --accent-primary: #FF1493;
+            --accent-secondary: #FF69B4;
+            --text-primary: #FFFFFF; /* White for main text */
+            --text-secondary: #D3D3D3; /* Light Gray for secondary text */
+            --success: #00FF7F;
+            --error: #FF4040;
+        }
+
+        /* General Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Content Wrapper for Blur Effect on Mobile Nav */
+        .content-wrapper {
+            transition: filter 0.3s ease;
+        }
+        .content-wrapper.nav-open {
+            filter: blur(3px);
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-primary);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        header.shrink { transform: scale(0.98); }
+        .top-bar {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px var(--accent-primary), 0 0 10px var(--accent-primary);
+        }
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+        .search-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 20px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        .search-bar input:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        .search-bar::after {
+            content: '🔍';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        nav { display: flex; gap: 1.5rem; }
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.2rem 0;
+            transition: color 0.3s;
+        }
+        nav a::before, nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="%23FF1493" stroke-width="2" fill="none"/></svg>') repeat-x;
+            background-size: 10px;
+            transition: width 0.3s ease;
+        }
+        nav a::before { top: 0; left: 0; }
+        nav a::after { bottom: 0; right: 0; }
+        nav a:hover::before, nav a:hover::after { width: 100%; }
+        nav a:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .header-icons { display: flex; gap: 1rem; align-items: center; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.2rem; color: var(--text-primary); }
+        .cart-icon:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            box-shadow: 0 0 5px var(--accent-primary);
+        }
+        #dark-mode-toggle { cursor: pointer; font-size: 1.2rem; color: var(--text-primary); }
+        #dark-mode-toggle:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-primary); }
+        .hamburger:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .nav-header {
+            display: none; /* Hidden by default for desktop */
+        }
+
+        /* Blog Page Layout */
+        .blog-container {
+            display: grid;
+            grid-template-columns: 3fr 1fr; /* Main content 75%, Sidebar 25% */
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .blog-main {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .blog-main h1 {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            animation: slideInLeft 1s ease-in-out;
+        }
+        .blog-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .blog-post {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 1s ease-in;
+        }
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--accent-primary);
+        }
+        .blog-post .image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+        .blog-post img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .blog-post h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin: 1rem 0 0.5rem;
+        }
+        .blog-post .meta {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .blog-post p {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .blog-post button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 5px var(--accent-primary);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .blog-post button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 10px var(--accent-secondary);
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--accent-secondary);
+        }
+        .comments-section h3 {
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .comment-form input, .comment-form textarea {
+            padding: 0.5rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 5px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        .comment-form input:focus, .comment-form textarea:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        .comment-form button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 5px var(--accent-primary);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .comment-form button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 10px var(--accent-secondary);
+        }
+        .form-message {
+            margin-top: 0.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .success { color: var(--success); text-shadow: 0 0 5px var(--success); }
+        .error { color: var(--error); text-shadow: 0 0 5px var(--error); }
+        .comments-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .comment {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .comment .meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .comment p {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        /* Sidebar Styles */
+        .blog-sidebar {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .blog-sidebar h3 {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+        .sidebar-search {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .sidebar-search input {
+            width: 100%;
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 20px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        .sidebar-search input:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        .sidebar-search::after {
+            content: '🔍';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        .categories, .recent-posts {
+            margin-bottom: 1.5rem;
+        }
+        .categories ul, .recent-posts ul {
+            list-style: none;
+        }
+        .categories li, .recent-posts li {
+            margin: 0.5rem 0;
+        }
+        .categories a, .recent-posts a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .categories a:hover, .recent-posts a:hover {
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 1rem;
+            position: relative;
+            border-top: 5px solid var(--accent-primary);
+            margin-top: 3rem;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="%23FF1493" stroke-width="2" fill="none"/></svg>') repeat-x;
+            background-size: 20px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        footer h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer p, footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0.5rem 0;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer p i { margin-right: 0.5rem; color: var(--accent-primary); }
+        footer form { display: flex; flex-direction: column; gap: 0.5rem; }
+        footer input, footer textarea {
+            padding: 0.5rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 5px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        footer input:focus, footer textarea:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        footer button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 10px var(--accent-secondary);
+        }
+        .form-message { text-align: center; margin-top: 0.5rem; }
+        .success { color: var(--success); text-shadow: 0 0 5px var(--success); }
+        .error { color: var(--error); text-shadow: 0 0 5px var(--error); }
+        .social-icons { display: flex; gap: 1rem; }
+        .social-icons a {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons a:hover {
+            color: var(--accent-primary);
+            transform: scale(1.2);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+        .back-to-top {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .back-to-top a {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+        .back-to-top a:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInNav {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .blog-container {
+                grid-template-columns: 2fr 1fr;
+                padding: 1rem;
+            }
+            .blog-main h1 { font-size: 2rem; }
+            .blog-post h2 { font-size: 1.3rem; }
+            .blog-post p { font-size: 0.9rem; }
+            .blog-sidebar h3 { font-size: 1.3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr; /* Stack sidebar below main content */
+                padding: 1rem;
+            }
+            .blog-main, .blog-sidebar {
+                padding: 1.5rem;
+            }
+            .blog-main h1 { font-size: 1.8rem; }
+            .blog-post h2 { font-size: 1.2rem; }
+            .blog-post p { font-size: 0.9rem; }
+            .blog-post button { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+            .comments-section h3 { font-size: 1.1rem; }
+            .comment-form input, .comment-form textarea { font-size: 0.9rem; }
+            .comment-form button { font-size: 0.9rem; padding: 0.4rem; }
+            .comment p { font-size: 0.8rem; }
+            .blog-sidebar h3 { font-size: 1.2rem; }
+            .main-header {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+            }
+            .logo { font-size: 1.5rem; }
+            .search-nav {
+                width: 100%;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+            .search-bar {
+                max-width: 100%;
+                flex: 1;
+            }
+            .search-bar input {
+                padding: 0.4rem 1.5rem 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: -70%;
+                width: 70%;
+                height: 100%;
+                background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+                padding: 2rem 1rem;
+                box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+                transition: left 0.3s ease;
+                z-index: 1001;
+                overflow-y: auto;
+                filter: none;
+            }
+            nav.active {
+                display: block;
+                left: 0;
+            }
+            .nav-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+            nav .nav-header h3 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #FFFFFF;
+                text-shadow: 0 0 10px var(--accent-primary);
+            }
+            nav .close-nav {
+                font-size: 1.5rem;
+                color: #FFFFFF;
+                cursor: pointer;
+                transition: transform 0.3s, text-shadow 0.3s;
+            }
+            nav .close-nav:hover {
+                transform: rotate(90deg);
+                text-shadow: 0 0 10px var(--accent-primary);
+            }
+            nav a {
+                display: block;
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+                color: #FFFFFF;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+                padding: 0.5rem 1rem;
+                border-radius: 5px;
+                background: rgba(255, 255, 255, 0.1);
+                transition: transform 0.3s, background 0.3s, text-shadow 0.3s;
+                opacity: 0;
+                transform: translateX(-20px);
+                animation: slideInNav 0.5s forwards;
+                animation-delay: calc(0.1s * var(--nav-index));
+            }
+            nav a:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateX(10px);
+                text-shadow: 0 0 15px var(--accent-primary);
+            }
+            .hamburger { display: block; }
+            .header-icons { gap: 0.5rem; }
+            .cart-icon, #dark-mode-toggle { font-size: 1rem; }
+            #cart-count { font-size: 0.6rem; padding: 1px 4px; }
+        }
+
+        @media (max-width: 480px) {
+            .blog-container { padding: 0.5rem; }
+            .blog-main, .blog-sidebar { padding: 1rem; }
+            .blog-main h1 { font-size: 1.5rem; }
+            .blog-post h2 { font-size: 1.1rem; }
+            .blog-post p { font-size: 0.8rem; }
+            .blog-post button { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+            .blog-sidebar h3 { font-size: 1.1rem; }
+            .main-header { padding: 0.5rem; }
+            .logo { font-size: 1.2rem; }
+            .search-bar input { font-size: 0.8rem; padding: 0.3rem 1rem 0.3rem 0.6rem; }
+            .hamburger { font-size: 1.2rem; }
+            .header-icons { gap: 0.3rem; }
+            .cart-icon, #dark-mode-toggle { font-size: 0.9rem; }
+            #cart-count { font-size: 0.5rem; padding: 1px 3px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">✨ Free Shipping on Orders Over $50! ✨</div>
+        <div class="main-header">
+            <div class="logo">Pretrevic Wigs</div>
+            <div class="search-nav">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for wigs...">
+                </div>
+                <span class="hamburger">☰</span>
+                <nav>
+                    <div class="nav-header">
+                        <h3>Pretrevic Wigs</h3>
+                        <span class="close-nav">✖</span>
+                    </div>
+                    <a href="index.html" style="--nav-index: 1;">Home</a>
+                    <a href="about.html" style="--nav-index: 2;">About Us</a>
+                    <a href="shop.html" style="--nav-index: 3;">Shop</a>
+                    <a href="customization.html" style="--nav-index: 4;">Customization</a>
+                    <a href="care-tips.html" style="--nav-index: 5;">Care & Tips</a>
+                    <a href="blog.html" style="--nav-index: 6;">Blog</a>
+                    <a href="community.html" style="--nav-index: 7;">Community</a>
+                    <a href="contact.html" style="--nav-index: 8;">Contact Us</a>
+                </nav>
+            </div>
+            <div class="header-icons">
+                <div class="cart-icon">🛒 <span id="cart-count">0</span></div>
+                <span id="dark-mode-toggle">🌙</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Blog Content -->
+        <div class="blog-container">
+            <!-- Main Blog Content -->
+            <section class="blog-main">
+                <h1>Wig Wisdom Blog</h1>
+                <div class="blog-posts">
+                    <article class="blog-post">
+                        <div class="image-wrapper">
+                            <picture>
+                                <source srcset="blog1.webp" type="image/webp">
+                                <img src="blog1.jpg" alt="Blog Post 1">
+                            </picture>
+                        </div>
+                        <h2>5 Tips for Maintaining Your Wig’s Shine</h2>
+                        <div class="meta">Posted on March 15, 2025 by Admin</div>
+                        <p>Keep your wig looking as good as new with these simple maintenance tips! From washing to storing, we’ve got you covered with expert advice to ensure your wig stays shiny and vibrant. Wigs are an investment in your style, and proper care can extend their lifespan dramatically. Start by using a sulfate-free shampoo to gently cleanse without stripping natural oils. Always detangle with a wide-tooth comb, starting from the ends to avoid breakage. Store your wig on a stand to maintain its shape, and consider a silk pillowcase to reduce friction overnight. Lastly, avoid excessive heat styling—opt for low-heat tools to keep that glossy finish intact!</p>
+                        <button onclick="window.location.href='blog-post.html?id=1'">Read More</button>
+                        <div class="comments-section">
+                            <h3>Comments</h3>
+                            <form class="comment-form" data-post-id="1" action="https://getform.io/f/your-getform-id" method="POST">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                                <textarea name="comment" placeholder="Your Comment" rows="3" required></textarea>
+                                <input type="hidden" name="post_id" value="1">
+                                <button type="submit">Post Comment</button>
+                                <div class="form-message"></div>
+                            </form>
+                            <div class="comments-list" id="comments-1"></div>
+                        </div>
+                    </article>
+
+                    <article class="blog-post">
+                        <div class="image-wrapper">
+                            <picture>
+                                <source srcset="blog2.webp" type="image/webp">
+                                <img src="blog2.jpg" alt="Blog Post 2" loading="lazy">
+                            </picture>
+                        </div>
+                        <h2>Top 10 Wig Trends for 2025</h2>
+                        <div class="meta">Posted on March 10, 2025 by Admin</div>
+                        <p>Stay ahead of the style game with the hottest wig trends for 2025! From bold colors to unique textures, here’s what’s making waves in the wig world this year. Neon hues like electric purple and lime green are dominating the scene, paired with futuristic cuts like asymmetrical bobs. Textured waves are back, giving a natural, beachy vibe, while long, sleek styles with blunt bangs are perfect for a dramatic look. Lace-front wigs with baby hairs are a must for realism, and we’re seeing a rise in eco-friendly, synthetic fibers that mimic human hair. Which trend will you rock?</p>
+                        <button onclick="window.location.href='blog-post.html?id=2'">Read More</button>
+                        <div class="comments-section">
+                            <h3>Comments</h3>
+                            <form class="comment-form" data-post-id="2" action="https://getform.io/f/your-getform-id" method="POST">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                                <textarea name="comment" placeholder="Your Comment" rows="3" required></textarea>
+                                <input type="hidden" name="post_id" value="2">
+                                <button type="submit">Post Comment</button>
+                                <div class="form-message"></div>
+                            </form>
+                            <div class="comments-list" id="comments-2"></div>
+                        </div>
+                    </article>
+
+                    <article class="blog-post">
+                        <div class="image-wrapper">
+                            <picture>
+                                <source srcset="blog3.webp" type="image/webp">
+                                <img src="blog3.jpg" alt="Blog Post 3" loading="lazy">
+                            </picture>
+                        </div>
+                        <h2>How to Choose the Perfect Wig for Your Face Shape</h2>
+                        <div class="meta">Posted on March 5, 2025 by Admin</div>
+                        <p>Finding the right wig can be a game-changer! Learn how to pick a wig that complements your face shape and enhances your natural beauty. Oval faces can pull off almost anything—try a chic pixie or long layers. For round faces, go for volume on top and longer lengths to elongate. Square faces shine with soft waves or curls to soften angles, while heart-shaped faces pair well with chin-length bobs to balance a wider forehead. Measure your face, play with styles, and don’t shy away from bold colors to make it uniquely yours!</p>
+                        <button onclick="window.location.href='blog-post.html?id=3'">Read More</button>
+                        <div class="comments-section">
+                            <h3>Comments</h3>
+                            <form class="comment-form" data-post-id="3" action="https://getform.io/f/your-getform-id" method="POST">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                                <textarea name="comment" placeholder="Your Comment" rows="3" required></textarea>
+                                <input type="hidden" name="post_id" value="3">
+                                <button type="submit">Post Comment</button>
+                                <div class="form-message"></div>
+                            </form>
+                            <div class="comments-list" id="comments-3"></div>
+                        </div>
+                    </article>
+
+                    <article class="blog-post">
+                        <div class="image-wrapper">
+                            <picture>
+                                <source srcset="blog4.webp" type="image/webp">
+                                <img src="blog4.jpg" alt="Blog Post 4" loading="lazy">
+                            </picture>
+                        </div>
+                        <h2>DIY Wig Customization Hacks You’ll Wish You Knew Sooner</h2>
+                        <div class="meta">Posted on February 28, 2025 by Admin</div>
+                        <p>Transform your wig into a masterpiece with these DIY hacks! Whether you’re trimming bangs, dyeing synthetic strands, or adding accessories, customization is the key to standing out. Use fabric dye for vibrant colors (test a small section first!), or grab sharp scissors for a quick fringe. Hot glue some glittery clips or beads for extra flair—think festival-ready vibes. Always work in a well-ventilated space and follow safety tips to keep your wig slay-worthy. Ready to unleash your inner artist?</p>
+                        <button onclick="window.location.href='blog-post.html?id=4'">Read More</button>
+                        <div class="comments-section">
+                            <h3>Comments</h3>
+                            <form class="comment-form" data-post-id="4" action="https://getform.io/f/your-getform-id" method="POST">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                                <textarea name="comment" placeholder="Your Comment" rows="3" required></textarea>
+                                <input type="hidden" name="post_id" value="4">
+                                <button type="submit">Post Comment</button>
+                                <div class="form-message"></div>
+                            </form>
+                            <div class="comments-list" id="comments-4"></div>
+                        </div>
+                    </article>
+
+                    <article class="blog-post">
+                        <div class="image-wrapper">
+                            <picture>
+                                <source srcset="blog5.webp" type="image/webp">
+                                <img src="blog5.jpg" alt="Blog Post 5" loading="lazy">
+                            </picture>
+                        </div>
+                        <h2>The History of Wigs: From Ancient Egypt to TikTok</h2>
+                        <div class="meta">Posted on February 20, 2025 by Admin</div>
+                        <p>Wigs have a wild history! In ancient Egypt, they were a status symbol, shaved heads topped with elaborate hairpieces to beat the heat. Fast forward to 17th-century Europe, where powdered wigs ruled the aristocracy—think Versailles-level extravagance. Today, TikTok’s wig influencers are flipping the script with tutorials and glow-ups, making wigs a vibe for everyone. From practicality to pure slay, wigs have evolved into a cultural staple. What’s your favorite era of wig history?</p>
+                        <button onclick="window.location.href='blog-post.html?id=5'">Read More</button>
+                        <div class="comments-section">
+                            <h3>Comments</h3>
+                            <form class="comment-form" data-post-id="5" action="https://getform.io/f/your-getform-id" method="POST">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                                <textarea name="comment" placeholder="Your Comment" rows="3" required></textarea>
+                                <input type="hidden" name="post_id" value="5">
+                                <button type="submit">Post Comment</button>
+                                <div class="form-message"></div>
+                            </form>
+                            <div class="comments-list" id="comments-5"></div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Sidebar -->
+            <aside class="blog-sidebar">
+                <div class="sidebar-search">
+                    <input type="text" placeholder="Search blog posts...">
+                </div>
+                <div class="categories">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">Wig Care</a></li>
+                        <li><a href="#">Style Tips</a></li>
+                        <li><a href="#">Trends</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Community Stories</a></li>
+                    </ul>
+                </div>
+                <div class="recent-posts">
+                    <h3>Recent Posts</h3>
+                    <ul>
+                        <li><a href="blog-post.html?id=1">5 Tips for Maintaining Your Wig’s Shine</a></li>
+                        <li><a href="blog-post.html?id=2">Top 10 Wig Trends for 2025</a></li>
+                        <li><a href="blog-post.html?id=3">How to Choose the Perfect Wig</a></li>
+                        <li><a href="blog-post.html?id=4">DIY Wig Customization Hacks</a></li>
+                        <li><a href="blog-post.html?id=5">The History of Wigs</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div>
+                    <h3>Pretrevic Wigs</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Wig Avenue, Lagos State, Nigeria</p>
+                    <p><i class="fas fa-globe"></i> We ship worldwide!</p>
+                    <p><i class="fas fa-phone-alt"></i> +234 123-456-7890</p>
+                    <p><i class="fas fa-envelope"></i> hello@pretrevicwigs.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9am-6pm, Sat: 10am-4pm (WAT)</p>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="shop.html">Shop</a></p>
+                    <p><a href="customization.html">Customization Studio</a></p>
+                    <p><a href="care-tips.html">Care & Tips</a></p>
+                    <p><a href="blog.html">Blog</a></p>
+                    <p><a href="community.html">Community</a></p>
+                    <p><a href="contact.html">Contact Us</a></p>
+                </div>
+                <div>
+                    <h3>Explore More</h3>
+                    <p><a href="#">Wig Mood Quiz</a></p>
+                    <p><a href="#">Lookbook</a></p>
+                    <p><a href="#">Customer Stories</a></p>
+                    <p><a href="#">Newsletter Signup</a></p>
+                </div>
+                <div>
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="fab fa-tiktok"></a>
+                        <a href="#" class="fab fa-twitter"></a>
+                        <a href="#" class="fab fa-facebook-f"></a>
+                        <a href="#" class="fab fa-instagram"></a>
+                        <a href="#" class="fab fa-whatsapp"></a>
+                        <a href="#" class="fab fa-pinterest"></a>
+                    </div>
+                    <h3 style="margin-top: 1rem;">Newsletter Love</h3>
+                    <form id="newsletter-form" action="https://getform.io/f/your-newsletter-id" method="POST">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <button type="submit">Join the Wig Fam!</button>
+                        <div class="form-message"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="back-to-top">
+                <a href="#">Back to Top ⬆️</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Header Shrink on Scroll
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('shrink', window.scrollY > 50);
+        });
+
+        // Hamburger Menu for Mobile
+        const nav = document.querySelector('nav');
+        const hamburger = document.querySelector('.hamburger');
+        const closeNav = document.querySelector('.close-nav');
+        const contentWrapper = document.querySelector('.content-wrapper');
+
+        hamburger.addEventListener('click', () => {
+            nav.classList.add('active');
+            contentWrapper.classList.add('nav-open');
+        });
+
+        closeNav.addEventListener('click', () => {
+            nav.classList.remove('active');
+            contentWrapper.classList.remove('nav-open');
+        });
+
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                contentWrapper.classList.remove('nav-open');
+            });
+        });
+
+        // Dark Mode Toggle
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            document.getElementById('dark-mode-toggle').textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('dark-mode-toggle').textContent = '☀️';
+        }
+
+        // Cart Functionality
+        function addToCart(id, name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let item = cart.items.find(i => i.id === id);
+            if (item) {
+                item.quantity += 1;
+            } else {
+                cart.items.push({ id, name, price, quantity: 176 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let modal = document.getElementById('cart-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'cart-modal';
+                modal.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg-primary); padding: 2rem; border-radius: 15px; box-shadow: 0 0 20px var(--accent-primary); z-index: 1002;';
+                document.body.appendChild(modal);
+            }
+            modal.innerHTML = `
+                <h2>Your Wig Haul</h2>
+                <ul>${cart.items.map(item => `
+                    <li>
+                        <span>${item.name} - $${item.price} x ${item.quantity}</span>
+                        <div class="quantity-controls">
+                            <button onclick="updateQuantity('${item.id}', -1)">-</button>
+                            <button onclick="updateQuantity('${item.id}', 1)">+</button>
+                            <button class="remove" onclick="removeItem('${item.id}')">Remove</button>
+                        </div>
+                    </li>`).join('')}
+                </ul>
+                <p>Total: $${cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2)}</p>
+                <button class="close-btn" onclick="document.getElementById('cart-modal').style.display='none'">Close</button>
+            `;
+            modal.style.display = 'block';
+            document.getElementById('cart-count').textContent = cart.items.length;
+        }
+
+        document.querySelector('.cart-icon').addEventListener('click', updateCartDisplay);
+
+        function updateQuantity(id, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let item = cart.items.find(i => i.id === id);
+            item.quantity += change;
+            if (item.quantity <= 0) cart.items = cart.items.filter(i => i.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function removeItem(id) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            cart.items = cart.items.filter(i => i.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        // Newsletter Form Submission
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let messageDiv = this.querySelector('.form-message');
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    this.reset();
+                    messageDiv.innerHTML = '<span class="success">Welcome to the Wig Fam! Check your email!</span>';
+                    messageDiv.style.display = 'block';
+                    setTimeout(() => messageDiv.style.display = 'none', 3000);
+                } else {
+                    messageDiv.innerHTML = '<span class="error">Oops! Try again!</span>';
+                    messageDiv.style.display = 'block';
+                    setTimeout(() => messageDiv.style.display = 'none', 3000);
+                }
+            })
+            .catch(() => {
+                messageDiv.innerHTML = '<span class="error">No connection—check your internet!</span>';
+                messageDiv.style.display = 'block';
+                setTimeout(() => messageDiv.style.display = 'none', 3000);
+            });
+        });
+
+        // Comment Form Submission with Getform.io
+        document.querySelectorAll('.comment-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const postId = this.getAttribute('data-post-id');
+                const messageDiv = this.querySelector('.form-message');
+                const commentsList = document.getElementById(`comments-${postId}`);
+
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        const name = formData.get('name');
+                        const commentText = formData.get('comment');
+                        const date = new Date().toLocaleDateString();
+                        const newComment = `
+                            <div class="comment">
+                                <div class="meta">Posted by ${name} on ${date}</div>
+                                <p>${commentText}</p>
+                            </div>
+                        `;
+                        commentsList.insertAdjacentHTML('beforeend', newComment);
+                        this.reset();
+                        messageDiv.innerHTML = '<span class="success">Comment posted! Slay on!</span>';
+                        setTimeout(() => messageDiv.innerHTML = '', 3000);
+                    } else {
+                        messageDiv.innerHTML = '<span class="error">Oops! Something went wrong!</span>';
+                        setTimeout(() => messageDiv.innerHTML = '', 3000);
+                    }
+                })
+                .catch(() => {
+                    messageDiv.innerHTML = '<span class="error">No connection—check your internet!</span>';
+                    setTimeout(() => messageDiv.innerHTML = '', 3000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

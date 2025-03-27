@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pretrevic Wigs - About Us</title>
+    <!-- Preload the first hero image -->
+    <link rel="preload" href="wig1.png" as="image">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Colors */
+        :root {
+            --bg-primary: #FFF5F8; /* Light Pinkish White */
+            --bg-secondary: #FFE4E1; /* Misty Rose for sections */
+            --accent-primary: #FF1493; /* Neon Pink */
+            --accent-secondary: #FF69B4; /* Softer Pink for accents */
+            --text-primary: #1A1A1A; /* Dark Gray for main text */
+            --text-secondary: #4A4A4A; /* Medium Gray for secondary text */
+            --success: #00FF7F; /* Neon Green for success */
+            --error: #FF4040; /* Neon Red for errors */
+        }
+        .dark-mode {
+            --bg-primary: #1A1A1A; /* Dark Gray for modern base */
+            --bg-secondary: #2C2C2C; /* Slightly lighter gray for sections */
+            --accent-primary: #FF1493;
+            --accent-secondary: #FF69B4;
+            --text-primary: #FFFFFF; /* White for main text */
+            --text-secondary: #D3D3D3; /* Light Gray for secondary text */
+            --success: #00FF7F;
+            --error: #FF4040;
+        }
+
+        /* General Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Content Wrapper for Blur Effect */
+        .content-wrapper {
+            transition: filter 0.3s ease;
+        }
+        .content-wrapper.nav-open {
+            filter: blur(3px); /* Reduced blur intensity */
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-primary);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        header.shrink { transform: scale(0.98); }
+        .top-bar {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px var(--accent-primary), 0 0 10px var(--accent-primary);
+        }
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+        .search-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 20px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        .search-bar input:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        .search-bar::after {
+            content: '🔍';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        nav { display: flex; gap: 1.5rem; }
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.2rem 0;
+            transition: color 0.3s;
+        }
+        nav a::before, nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="%23FF1493" stroke-width="2" fill="none"/></svg>') repeat-x;
+            background-size: 10px;
+            transition: width 0.3s ease;
+        }
+        nav a::before { top: 0; left: 0; }
+        nav a::after { bottom: 0; right: 0; }
+        nav a:hover::before, nav a:hover::after { width: 100%; }
+        nav a:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .header-icons { display: flex; gap: 1rem; align-items: center; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.2rem; color: var(--text-primary); }
+        .cart-icon:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            box-shadow: 0 0 5px var(--accent-primary);
+        }
+        #dark-mode-toggle { cursor: pointer; font-size: 1.2rem; color: var(--text-primary); }
+        #dark-mode-toggle:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-primary); }
+        .hamburger:hover { color: var(--accent-primary); text-shadow: 0 0 5px var(--accent-primary); }
+        .nav-header {
+            display: none; /* Hide nav-header by default (desktop mode) */
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: left 0.5s ease, opacity 0.5s ease;
+        }
+        .hero-slide.active {
+            left: 0;
+            opacity: 1;
+        }
+        .hero-slide picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: zoomIn 1.5s ease-in-out;
+        }
+        @keyframes zoomIn {
+            0% { transform: scale(1.2); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFFFFF;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: slideInLeft 1s ease-in-out;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            animation: slideInRight 1s ease-in-out 0.3s;
+            animation-fill-mode: both;
+        }
+        .hero-content button {
+            background: var(--accent-primary);
+            color: #FFFFFF;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 0 10px var(--accent-primary);
+            transition: background 0.3s, box-shadow 0.3s;
+            animation: bounceIn 1s ease-in-out 0.6s;
+            animation-fill-mode: both;
+        }
+        .hero-content button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+        @keyframes slideInLeft {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Main Content */
+        main { padding: 2rem; }
+        .about-section, .mission-section, .team-section, .values-section, .cta-section {
+            margin: 3rem 0;
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .about-section h2, .mission-section h2, .team-section h2, .values-section h2, .cta-section h2 {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+        .about-section p, .mission-section p, .team-section p, .values-section p, .cta-section p {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Team Section */
+        .team-section .intro-text {
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-in;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .team-member {
+            position: relative;
+            background: var(--bg-primary);
+            padding: 2rem 1rem 1rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .team-member::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 2rem;
+            color: var(--accent-primary);
+            opacity: 0.2;
+            line-height: 1;
+        }
+        .team-member::after {
+            content: '✨';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 2rem;
+            color: var(--accent-primary);
+            opacity: 0.2;
+            line-height: 1;
+        }
+        .team-member:nth-child(odd) {
+            background: linear-gradient(135deg, var(--bg-primary), var(--accent-secondary));
+            transform: rotate(-2deg);
+        }
+        .team-member:nth-child(even) {
+            background: linear-gradient(135deg, var(--bg-primary), var(--accent-primary));
+            transform: rotate(2deg);
+        }
+        .team-member:hover {
+            transform: translateY(-5px) rotate(0deg);
+        }
+        .team-member .image-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--accent-primary);
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .team-member:hover .image-wrapper {
+            box-shadow: 0 0 20px var(--accent-primary), 0 0 30px rgba(255, 20, 147, 0.5);
+            transform: scale(1.05);
+        }
+        .team-member img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+        .team-member h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-primary);
+        }
+        .team-member .role {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .team-member p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Values Section */
+        .values-section .intro-text {
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-in;
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .value-card {
+            position: relative;
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .value-card::before {
+            content: '💖';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 2rem;
+            color: var(--accent-primary);
+            opacity: 0.2;
+            line-height: 1;
+        }
+        .value-card::after {
+            content: '💖';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 2rem;
+            color: var(--accent-primary);
+            opacity: 0.2;
+            line-height: 1;
+        }
+        .value-card:nth-child(odd) {
+            background: linear-gradient(135deg, var(--bg-primary), var(--accent-secondary));
+            transform: rotate(-2deg);
+        }
+        .value-card:nth-child(even) {
+            background: linear-gradient(135deg, var(--bg-primary), var(--accent-primary));
+            transform: rotate(2deg);
+        }
+        .value-card:hover {
+            transform: translateY(-5px) rotate(0deg);
+        }
+        .value-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-primary);
+        }
+        .value-card p {
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section { text-align: center; }
+        .cta-section button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+        .cta-section button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+
+        /* Cart Modal */
+        #cart-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-primary);
+            padding: 2rem;
+            border: 2px solid var(--accent-primary);
+            border-radius: 15px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px var(--accent-primary);
+            z-index: 2000;
+        }
+        #cart-modal h2 {
+            font-size: 1.8rem;
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        #cart-modal ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        #cart-modal li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        #cart-modal li span {
+            flex: 1;
+            font-weight: 500;
+        }
+        #cart-modal li .quantity-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        #cart-modal li button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 5px var(--accent-primary);
+            font-size: 0.9rem;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        #cart-modal li button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 10px var(--accent-secondary);
+        }
+        #cart-modal li button.remove {
+            background: var(--error);
+            box-shadow: 0 0 5px var(--error);
+        }
+        #cart-modal li button.remove:hover {
+            background: #FF6666;
+            box-shadow: 0 0 10px #FF6666;
+        }
+        #cart-modal p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        #cart-modal .close-btn {
+            display: block;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.8rem;
+            margin: 0 auto;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--accent-primary);
+            font-size: 1rem;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        #cart-modal .close-btn:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 1rem;
+            position: relative;
+            border-top: 5px solid var(--accent-primary);
+            margin-top: 3rem;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="%23FF1493" stroke-width="2" fill="none"/></svg>') repeat-x;
+            background-size: 20px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        footer h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer p, footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0.5rem 0;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer p i { margin-right: 0.5rem; color: var(--accent-primary); }
+        footer form { display: flex; flex-direction: column; gap: 0.5rem; }
+        footer input, footer textarea {
+            padding: 0.5rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 5px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        footer input:focus, footer textarea:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        footer button {
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 5px var(--accent-primary);
+        }
+        footer button:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 10px var(--accent-secondary);
+        }
+        .form-message { text-align: center; margin-top: 0.5rem; }
+        .success { color: var(--success); text-shadow: 0 0 5px var(--success); }
+        .error { color: var(--error); text-shadow: 0 0 5px var(--error); }
+        .social-icons { display: flex; gap: 1rem; }
+        .social-icons a {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons a:hover {
+            color: var(--accent-primary);
+            transform: scale(1.2);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+        .back-to-top {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .back-to-top a {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent-primary);
+            color: var(--text-primary);
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+        .back-to-top a:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 15px var(--accent-secondary);
+        }
+
+        /* Improved Responsiveness */
+        @media (max-width: 1024px) {
+            .main-header {
+                padding: 1rem;
+            }
+            .logo { font-size: 1.8rem; }
+            .search-bar { max-width: 300px; }
+            .hero { height: 400px; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .hero-content button { padding: 0.8rem 1.5rem; font-size: 1rem; }
+            .team-grid, .values-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            .team-member, .value-card {
+                padding: 1.5rem;
+            }
+            .team-member::before, .team-member::after,
+            .value-card::before, .value-card::after {
+                font-size: 1.5rem;
+            }
+            .team-member .image-wrapper {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+            }
+            .logo { font-size: 1.5rem; }
+            .search-nav {
+                width: 100%;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+            .search-bar {
+                max-width: 100%;
+                flex: 1;
+            }
+            .search-bar input {
+                padding: 0.4rem 1.5rem 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: -70%;
+                width: 70%;
+                height: 100%;
+                background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+                padding: 2rem 1rem;
+                box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+                transition: left 0.3s ease;
+                z-index: 1001;
+                overflow-y: auto;
+                filter: none;
+            }
+            nav.active {
+                display: block;
+                left: 0;
+            }
+            .nav-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+            nav .nav-header h3 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #FFFFFF;
+                text-shadow: 0 0 10px var(--accent-primary);
+            }
+            nav .close-nav {
+                font-size: 1.5rem;
+                color: #FFFFFF;
+                cursor: pointer;
+                transition: transform 0.3s, text-shadow 0.3s;
+            }
+            nav .close-nav:hover {
+                transform: rotate(90deg);
+                text-shadow: 0 0 10px var(--accent-primary);
+            }
+            nav a {
+                display: block;
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+                color: #FFFFFF;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+                padding: 0.5rem 1rem;
+                border-radius: 5px;
+                background: rgba(82, 82, 80, 0.16);
+                transition: transform 0.3s, background 0.3s, text-shadow 0.3s;
+                opacity: 0;
+                transform: translateX(-20px);
+                animation: slideInNav 0.5s forwards;
+                animation-delay: calc(0.1s * var(--nav-index));
+            }
+            nav a:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateX(10px);
+                text-shadow: 0 0 15px var(--accent-primary);
+            }
+            @keyframes slideInNav {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            .hamburger { display: block; }
+            .header-icons { gap: 0.5rem; }
+            .cart-icon, #dark-mode-toggle { font-size: 1rem; }
+            #cart-count { font-size: 0.6rem; padding: 1px 4px; }
+            .hero { height: 300px; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content p { font-size: 0.9rem; }
+            .hero-content button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+            main { padding: 1rem; }
+            .about-section, .mission-section, .team-section, .values-section, .cta-section {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            .about-section h2, .mission-section h2, .team-section h2, .values-section h2, .cta-section h2 {
+                font-size: 1.5rem;
+            }
+            .about-section p, .mission-section p, .team-section p, .values-section p, .cta-section p {
+                font-size: 0.9rem;
+            }
+            .team-grid, .values-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .team-member, .value-card {
+                padding: 1.2rem;
+            }
+            .team-member::before, .team-member::after,
+            .value-card::before, .value-card::after {
+                font-size: 1.2rem;
+            }
+            .team-member .image-wrapper {
+                width: 120px;
+                height: 120px;
+            }
+            .team-member h3 { font-size: 1.1rem; }
+            .team-member .role { font-size: 0.9rem; }
+            .team-member p { font-size: 0.85rem; }
+            .value-card h3 { font-size: 1rem; }
+            .value-card p { font-size: 0.8rem; }
+            .cta-section button { padding: 0.8rem 1.5rem; font-size: 1rem; }
+            #cart-modal {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                transform: none;
+                border: none;
+                padding: 1.5rem;
+                border-radius: 0;
+            }
+            #cart-modal h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            #cart-modal li {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            #cart-modal li span {
+                margin-bottom: 0.5rem;
+            }
+            #cart-modal li .quantity-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            #cart-modal li button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            #cart-modal p {
+                font-size: 1rem;
+            }
+            #cart-modal .close-btn {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            footer { padding: 2rem 1rem; }
+            .footer-content { padding: 1rem; gap: 1rem; }
+            footer h3 { font-size: 1.1rem; }
+            footer p, footer a { font-size: 0.9rem; }
+            .social-icons a { font-size: 1.5rem; }
+            .back-to-top a { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+        }
+
+        @media (max-width: 480px) {
+            .main-header { padding: 0.5rem; }
+            .logo { font-size: 1.2rem; }
+            .search-bar input { font-size: 0.8rem; padding: 0.3rem 1rem 0.3rem 0.6rem; }
+            .hamburger { font-size: 1.2rem; }
+            .header-icons { gap: 0.3rem; }
+            .cart-icon, #dark-mode-toggle { font-size: 0.9rem; }
+            #cart-count { font-size: 0.5rem; padding: 1px 3px; }
+            .hero { height: 250px; }
+            .hero-content h1 { font-size: 1.5rem; }
+            .hero-content p { font-size: 0.8rem; }
+            .hero-content button { padding: 0.5rem 1rem; font-size: 0.8rem; }
+            main { padding: 0.5rem; }
+            .about-section, .mission-section, .team-section, .values-section, .cta-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            .about-section h2, .mission-section h2, .team-section h2, .values-section h2, .cta-section h2 {
+                font-size: 1.2rem;
+            }
+            .about-section p, .mission-section p, .team-section p, .values-section p, .cta-section p {
+                font-size: 0.8rem;
+            }
+            .team-grid, .values-grid {
+                gap: 0.8rem;
+            }
+            .team-member, .value-card {
+                padding: 1rem;
+            }
+            .team-member::before, .team-member::after,
+            .value-card::before, .value-card::after {
+                font-size: 1rem;
+            }
+            .team-member .image-wrapper {
+                width: 100px;
+                height: 100px;
+            }
+            .team-member h3 { font-size: 1rem; }
+            .team-member .role { font-size: 0.85rem; }
+            .team-member p { font-size: 0.8rem; }
+            .value-card h3 { font-size: 0.9rem; }
+            .value-card p { font-size: 0.7rem; }
+            .cta-section button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+            footer { padding: 1.5rem 0.5rem; }
+            .footer-content { padding: 0.5rem; gap: 0.5rem; }
+            footer h3 { font-size: 1rem; }
+            footer p, footer a { font-size: 0.8rem; }
+            .social-icons a { font-size: 1.2rem; }
+            .back-to-top a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">✨ Free Shipping on Orders Over $50! ✨</div>
+        <div class="main-header">
+            <div class="logo">Pretrevic Wigs</div>
+            <div class="search-nav">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for wigs...">
+                </div>
+                <span class="hamburger">☰</span>
+                <nav>
+                    <div class="nav-header">
+                        <h3>Pretrevic Wigs</h3>
+                        <span class="close-nav">✖</span>
+                    </div>
+                    <a href="index.html" style="--nav-index: 1;">Home</a>
+                    <a href="about.html" style="--nav-index: 2;">About Us</a>
+                    <a href="shop.html" style="--nav-index: 3;">Shop</a>
+                    <a href="customization.html" style="--nav-index: 4;">Customization</a>
+                    <a href="care-tips.html" style="--nav-index: 5;">Care & Tips</a>
+                    <a href="blog.html" style="--nav-index: 6;">Blog</a>
+                    <a href="community.html" style="--nav-index: 7;">Community</a>
+                    <a href="contact.html" style="--nav-index: 8;">Contact Us</a>
+                </nav>
+            </div>
+            <div class="header-icons">
+                <div class="cart-icon">🛒 <span id="cart-count">0</span></div>
+                <span id="dark-mode-toggle">🌙</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Main Content -->
+        <main>
+            <section class="hero">
+                <div class="hero-carousel">
+                    <div class="hero-slide">
+                        <picture>
+                            <source srcset="wig1.jpg" type="image/jpg">
+                            <img src="wig1.png" alt="Hero Image 1" width="1200" height="500">
+                        </picture>
+                    </div>
+                    <div class="hero-slide">
+                        <picture>
+                            <source srcset="wig2.jpg" type="image/jpg">
+                            <img src="wig2.png" alt="Hero Image 2" loading="lazy" width="1200" height="500">
+                        </picture>
+                    </div>
+                    <div class="hero-slide">
+                        <picture>
+                            <source srcset="wig3.jpg" type="image/jpg">
+                            <img src="wig3.png" alt="Hero Image 3" loading="lazy" width="1200" height="500">
+                        </picture>
+                    </div>
+                </div>
+                <div class="hero-content">
+                    <h1>About Pretrevic Wigs</h1>
+                    <p>Learn more about our mission, team, and the values that drive us to create amazing wigs!</p>
+                    <button onclick="window.location.href='shop.html'">Shop Now</button>
+                </div>
+            </section>
+
+            <section class="about-section">
+                <h2>Our Story</h2>
+                <p>Pretrevic Wigs was born out of a passion for self-expression and creativity. Founded in 2018 by a group of friends who loved experimenting with their looks, we set out to create a brand that celebrates individuality through high-quality wigs. What started as a small operation in Lagos, Nigeria, has grown into a global community of wig enthusiasts who share our love for bold, beautiful hair. We’re committed to making wigs that not only look amazing but also feel comfortable and empowering to wear. Every wig we create is a labor of love, designed to help you tell your unique story.</p>
+            </section>
+
+            <section class="mission-section">
+                <h2>Our Mission</h2>
+                <p>At Pretrevic Wigs, our mission is simple: to empower you to embrace your unique style with confidence and joy. We believe that a wig is more than just a fashion statement—it’s a way to express who you are, to step into a new version of yourself, or to simply have fun. We’re here to support you every step of the way, from choosing the perfect wig to styling and caring for it. Our goal is to make every day a good hair day, because you deserve to feel fabulous!</p>
+            </section>
+
+            <section class="team-section">
+                <h2>Meet Our Team</h2>
+                <p class="intro-text">We’re a small but mighty team of wig lovers, creatives, and dreamers. Get to know the people behind Pretrevic Wigs!</p>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="image-wrapper">
+                            <img src="oluchi.jpg" alt="Oluchi" loading="lazy" width="180" height="180">
+                        </div>
+                        <h3>Oluchi</h3>
+                        <p class="role">Founder & Creative Director</p>
+                        <p>Oluchi’s love for wigs started as a hobby and turned into a mission to empower others through hair.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="image-wrapper">
+                            <img src="Chi Chi.jpg" alt="Chi Chi" loading="lazy" width="180" height="180">
+                        </div>
+                        <h3>Chi Chi</h3>
+                        <p class="role">Lead Designer</p>
+                        <p>Chi Chi brings her artistic flair to every wig, ensuring each piece is a work of art.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="image-wrapper">
+                            <img src="chioma.jpg" alt="Chioma" loading="lazy" width="180" height="180">
+                        </div>
+                        <h3>Chioma</h3>
+                        <p class="role">Customer Happiness Manager</p>
+                        <p>Chioma is here to make sure your Pretrevic experience is nothing short of amazing.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="values-section">
+                <h2>Our Values</h2>
+                <p class="intro-text">We’re guided by a set of core values that shape everything we do at Pretrevic Wigs.</p>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h3>Empowerment</h3>
+                        <p>We believe in empowering you to express your true self through your style.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>Quality</h3>
+                        <p>Every wig is crafted with the highest quality materials for comfort and durability.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>Community</h3>
+                        <p>We’re building a global community of wig lovers who inspire and support each other.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta-section">
+                <h2>Join the Pretrevic Family</h2>
+                <p>Ready to find your perfect wig? Explore our collection and become part of our vibrant community!</p>
+                <button onclick="window.location.href='shop.html'">Shop Now</button>
+            </section>
+        </main>
+
+        <!-- Cart Modal -->
+        <div id="cart-modal"></div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div>
+                    <h3>Pretrevic Wigs</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Wig Avenue, Lagos State, Nigeria</p>
+                    <p><i class="fas fa-globe"></i> We ship worldwide!</p>
+                    <p><i class="fas fa-phone-alt"></i> +234 123-456-7890</p>
+                    <p><i class="fas fa-envelope"></i> hello@pretrevicwigs.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9am-6pm, Sat: 10am-4pm (WAT)</p>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="shop.html">Shop</a></p>
+                    <p><a href="customization.html">Customization Studio</a></p>
+                    <p><a href="care-tips.html">Care & Tips</a></p>
+                    <p><a href="blog.html">Blog</a></p>
+                    <p><a href="community.html">Community</a></p>
+                    <p><a href="contact.html">Contact Us</a></p>
+                </div>
+                <div>
+                    <h3>Explore More</h3>
+                    <p><a href="#">Wig Mood Quiz</a></p>
+                    <p><a href="#">Lookbook</a></p>
+                    <p><a href="#">Customer Stories</a></p>
+                    <p><a href="#">Newsletter Signup</a></p>
+                </div>
+                <div>
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="fab fa-tiktok"></a>
+                        <a href="#" class="fab fa-twitter"></a>
+                        <a href="#" class="fab fa-facebook-f"></a>
+                        <a href="#" class="fab fa-instagram"></a>
+                        <a href="#" class="fab fa-whatsapp"></a>
+                        <a href="#" class="fab fa-pinterest"></a>
+                    </div>
+                    <h3 style="margin-top: 1rem;">Newsletter Love</h3>
+                    <form id="newsletter-form" action="https://getform.io/f/your-newsletter-id" method="POST">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <button type="submit">Join the Wig Fam!</button>
+                        <div class="form-message"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="back-to-top">
+                <a href="#">Back to Top ⬆️</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Hero Carousel
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        showSlide(currentSlide);
+        setInterval(nextSlide, 5000);
+
+        // Header Shrink on Scroll
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('shrink', window.scrollY > 50);
+        });
+
+        // Hamburger Menu
+        const nav = document.querySelector('nav');
+        const hamburger = document.querySelector('.hamburger');
+        const closeNav = document.querySelector('.close-nav');
+        const contentWrapper = document.querySelector('.content-wrapper');
+
+        hamburger.addEventListener('click', () => {
+            nav.classList.add('active');
+            contentWrapper.classList.add('nav-open');
+        });
+
+        closeNav.addEventListener('click', () => {
+            nav.classList.remove('active');
+            contentWrapper.classList.remove('nav-open');
+        });
+
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                contentWrapper.classList.remove('nav-open');
+            });
+        });
+
+        // Dark Mode Toggle
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            document.getElementById('dark-mode-toggle').textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('dark-mode-toggle').textContent = '☀️';
+        }
+
+        // Cart Functionality
+        function addToCart(id, name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let item = cart.items.find(i => i.id === id);
+            if (item) {
+                item.quantity += 1;
+            } else {
+                cart.items.push({ id, name, price, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let modal = document.getElementById('cart-modal');
+            modal.innerHTML = `
+                <h2>Your Wig Haul</h2>
+                <ul>${cart.items.map(item => `
+                    <li>
+                        <span>${item.name} - $${item.price} x ${item.quantity}</span>
+                        <div class="quantity-controls">
+                            <button onclick="updateQuantity('${item.id}', -1)">-</button>
+                            <button onclick="updateQuantity('${item.id}', 1)">+</button>
+                            <button class="remove" onclick="removeItem('${item.id}')">Remove</button>
+                        </div>
+                    </li>`).join('')}
+                </ul>
+                <p>Total: $${cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2)}</p>
+                <button class="close-btn" onclick="document.getElementById('cart-modal').style.display='none'">Close</button>
+            `;
+            modal.style.display = 'block';
+            document.getElementById('cart-count').textContent = cart.items.length;
+        }
+
+        document.querySelector('.cart-icon').addEventListener('click', updateCartDisplay);
+
+        function updateQuantity(id, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            let item = cart.items.find(i => i.id === id);
+            item.quantity += change;
+            if (item.quantity <= 0) cart.items = cart.items.filter(i => i.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function removeItem(id) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+            cart.items = cart.items.filter(i => i.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        // Form Submission
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let messageDiv = this.querySelector('.form-message');
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    this.reset();
+                    messageDiv.innerHTML = '<span class="success">Welcome to the Wig Fam! Check your email!</span>';
+                    messageDiv.style.display = 'block';
+                    setTimeout(() => messageDiv.style.display = 'none', 3000);
+                } else {
+                    messageDiv.innerHTML = '<span class="error">Oops! Try again!</span>';
+                    messageDiv.style.display = 'block';
+                    setTimeout(() => messageDiv.style.display = 'none', 3000);
+                }
+            })
+            .catch(() => {
+                messageDiv.innerHTML = '<span class="error">No connection—check your internet!</span>';
+                messageDiv.style.display = 'block';
+                setTimeout(() => messageDiv.style.display = 'none', 3000);
+            });
+        });
+    </script>
+</body>
+</html>
